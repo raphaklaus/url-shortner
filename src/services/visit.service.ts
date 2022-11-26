@@ -3,10 +3,8 @@ import { extractCode } from "./utils/url";
 
 export default class VisitService {
   private readonly visit: IRepository;
-  private readonly shortURL: IRepository;
-  constructor(visit: IRepository, shortURL: IRepository) {
+  constructor(visit: IRepository) {
     this.visit = visit;
-    this.shortURL = shortURL;
   }
 
   async getCount(short_url_id: number) {
