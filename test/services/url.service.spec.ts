@@ -1,20 +1,6 @@
 import { PrismaClient } from ".prisma/client";
-import { IStrategy, URLShortnerMap } from "../../src/core/strategy.interface";
 import URLShortnerService from "../../src/services/urlShortner.service";
-
-class NotUniqueStrategy implements IStrategy {
-  baseDomain: string;
-  constructor(baseDomain) {
-    this.baseDomain = baseDomain;
-  }
-
-  run(url: string): URLShortnerMap {
-    return {
-      from: url,
-      to: "1",
-    };
-  }
-}
+import NotUniqueStrategy from "../utils/mockStrategy";
 
 const repository = new PrismaClient();
 
@@ -28,19 +14,19 @@ afterEach(async () => {
 
 describe("URL Shortner service", () => {
   test("should save URL generated in the database", async () => {
-    const strategy = new NotUniqueStrategy("tier.app");
+    const strategy = new NotUniqueStrategy();
     const service = new URLShortnerService(strategy, repository.shortURL);
-    const shortURL = await service.create("https://google.com");
+    const url = await service.create("https://google.com");
 
-    const savedURL = await service.get(shortURL.code);
+    const savedURL = await service.get(url);
     expect(savedURL).toMatchObject({
       source: "https://google.com",
-      code: shortURL.code,
+      code: "1",
     });
   });
 
-  test("should throw uniqueness exception", async () => {
-    const strategy = new NotUniqueStrategy("tier.app");
+  test("should throw uniqueness exception on repeated code", async () => {
+    const strategy = new NotUniqueStrategy();
     const service = new URLShortnerService(strategy, repository.shortURL);
     expect(async () => {
       await service.create("https://google.com");
