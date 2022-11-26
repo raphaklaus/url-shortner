@@ -1,18 +1,15 @@
-import AlphanumericStrategy from "../../src/core/alpha.strategy";
 import URLShortner from "../../src/core/urlShortner.core";
+import NotUniqueStrategy from "../utils/mockStrategy";
 
-describe("URL Shortner", () => {
+describe("URL Shortner core strategy", () => {
   test("should return a valid shortned URL", () => {
-    const strategy = new AlphanumericStrategy("tier.app");
+    const strategy = new NotUniqueStrategy();
     const urlShortner = new URLShortner(strategy);
-    const url = urlShortner.process("https://google.com");
-    const parsedUrl = new URL(url.to);
+    const urlMapping = urlShortner.process("https://google.com");
 
-    expect(parsedUrl).toMatchObject({
-      protocol: "https:",
-      host: "tier.app",
+    expect(urlMapping).toMatchObject({
+      from: "https://google.com",
+      to: "1",
     });
-
-    expect(parsedUrl.pathname.length).toBeGreaterThan(1);
   });
 });
