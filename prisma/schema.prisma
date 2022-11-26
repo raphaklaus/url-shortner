@@ -14,4 +14,16 @@ model ShortURL {
   id Int @id @default(autoincrement())
   code String @unique
   source String 
+  visit Visit?
+  
+  @@map("short_urls")
+}
+
+model Visit {
+  id Int @id @default(autoincrement())
+  short_url ShortURL @relation(fields: [short_url_id], references: [id], onDelete: Cascade)
+  short_url_id Int @unique
+  count Int @default(0)
+
+  @@map("visits")
 }
