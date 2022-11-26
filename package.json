@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/server/app.js",
   "scripts": {
-    "test": "dotenv -e .env.test -- jest --config ./config/jest.json",
+    "test": "dotenv -e .env.test -- jest -i --config ./config/jest.json",
     "bootstrap": "prisma generate",
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:test": "dotenv -e .env.test -- prisma migrate dev",
