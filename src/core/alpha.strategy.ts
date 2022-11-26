@@ -1,7 +1,6 @@
 import { URLShortnerMap, IStrategy } from "./strategy.interface";
 
 export default class AlphanumericStrategy implements IStrategy {
-  baseDomain: string;
   readonly characters = [
     "A",
     "B",
@@ -58,14 +57,10 @@ export default class AlphanumericStrategy implements IStrategy {
   ];
   readonly numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-  constructor(baseDomain: string) {
-    this.baseDomain = baseDomain.replace(/\/$/, "");
-  }
-
   run(url: string): URLShortnerMap {
     return {
       from: url,
-      to: `https://${this.baseDomain}/${this.generate()}`,
+      to: this.generate(),
     };
   }
 
