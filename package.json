@@ -4,7 +4,10 @@
   "description": "",
   "main": "dist/server/app.js",
   "scripts": {
-    "test": "jest --config ./config/jest.json",
+    "test": "dotenv -e .env.test -- jest --config ./config/jest.json",
+    "bootstrap": "prisma generate",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:migrate:test": "dotenv -e .env.test -- prisma migrate dev",
     "start": "tsc-watch -p ./config/tsconfig.json --onSuccess \"node dist/server/app.js\"",
     "lint": "eslint . --ext .ts"
   },
@@ -27,12 +30,15 @@
     "@typescript-eslint/parser": "^5.38.1",
     "eslint": "^8.24.0",
     "jest": "^27.3.1",
+    "prisma": "^4.6.1",
     "ts-jest": "^27.0.7",
     "tsc-watch": "^4.5.0",
     "typescript": "^4.4.4"
   },
   "dependencies": {
+    "@prisma/client": "^4.6.1",
     "body-parser": "^1.20.1",
+    "dotenv-cli": "^6.0.0",
     "express": "^4.18.2"
   }
 }
