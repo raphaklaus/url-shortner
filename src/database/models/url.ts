@@ -16,7 +16,7 @@ export class ShortURL {
   @Column()
   source: string;
 
-  @OneToOne(() => Visit, (visit) => visit)
+  @OneToOne(() => Visit, (visit) => visit.shortURL, { cascade: true })
   visit: Visit;
 
   @Index({ unique: true })
