@@ -18,11 +18,11 @@ export default class VisitController {
     const shortURL = await urlService.get(url);
 
     if (shortURL) {
-      const visit = await visitService.incrementCount(shortURL.visit.id);
+      await visitService.incrementCount(shortURL.id);
 
-      return res.json({ visit });
+      return res.json({ visit: shortURL.visit.count + 1 });
     }
 
-    return res.json({ message: "Short URL not found" });
+    return res.status(404).json({ message: "Short URL not found" });
   }
 }

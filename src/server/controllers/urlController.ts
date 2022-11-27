@@ -10,7 +10,8 @@ export default class URLController {
     const strategy = new AlphanumericStrategy();
     const shortURLRepo = AppDataSource.getRepository(ShortURL);
     const urlService = new URLShortnerService(strategy, shortURLRepo);
-    const url = await urlService.create(inputURL);
+    const shortURL = await urlService.create(inputURL);
+    const url = urlService.getURL(shortURL);
 
     return res.json({ url });
   }
