@@ -1,35 +1,34 @@
+import { Repository } from "typeorm";
 import { IStrategy } from "../core/strategy.interface";
 import URLShortner from "../core/urlShortner.core";
-import IRepository from "../repository/repository.interface";
+import { ShortURL } from "../database/models/url";
+import { Visit } from "../database/models/visit";
 import { extractCode } from "./utils/url";
 
 export default class URLShortnerService {
   private readonly shortner: URLShortner;
-  private readonly shortURLRepository: IRepository;
-  private readonly baseDomain: string;
   constructor(
-    strategy: IStrategy,
-    shortURLRepository: IRepository,
-    baseDomain = "tier.app"
+    private readonly strategy: IStrategy,
+    private readonly shortURLRepository: Repository<ShortURL>,
+    private readonly baseDomain = "tier.app"
   ) {
     this.baseDomain = baseDomain;
     this.shortURLRepository = shortURLRepository;
-    this.shortner = new URLShortner(strategy);
+    this.shortner = new URLShortner(this.strategy);
   }
 
   async create(url: string): Promise<string> {
-    const result = this.shortner.process(url);
+    const shortURL = new ShortURL();
+    shortURL.source = url;
+    shortURL.visit = new Visit();
+    shortURL.code = this.shortner.process(url).to;
 
-    const shortURL = await this.shortURLRepository.create({
-      data: { source: result.from, code: result.to, visit: { create: {} } },
-    });
+    await this.shortURLRepository.save(shortURL);
 
     return `https://${this.baseDomain}/${shortURL.code}`;
   }
 
-  get(url: string): Promise<any> {
-    return this.shortURLRepository.findUnique({
-      where: { code: extractCode(url) },
-    });
+  get(url: string): Promise<ShortURL | null> {
+    return this.shortURLRepository.findOneBy({ code: extractCode(url) });
   }
 }

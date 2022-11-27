@@ -17,6 +17,7 @@ describe("URL Shortner service", () => {
     const strategy = new NotUniqueStrategy();
     const service = new URLShortnerService(strategy, repository.shortURL);
     const url = await service.create("https://google.com");
+    repository.shortURL;
 
     const savedURL = await service.get(url);
     expect(savedURL).toMatchObject({

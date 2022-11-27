@@ -1,27 +1,17 @@
-import IRepository from "../repository/repository.interface";
-import { extractCode } from "./utils/url";
+import { Repository } from "typeorm";
+import { Visit } from "../database/models/visit";
 
 export default class VisitService {
-  private readonly visit: IRepository;
-  constructor(visit: IRepository) {
+  constructor(private readonly visit: Repository<Visit>) {
     this.visit = visit;
   }
 
-  async getCount(short_url_id: number) {
-    const visit = await this.visit.findUnique({ where: { short_url_id } });
-    return visit.count;
+  async getCount(id: number) {
+    const visit = await this.visit.findOneBy({ id });
+    return visit?.count || 0;
   }
 
   incrementCount(short_url_id: number): Promise<any> {
-    return this.visit.update({
-      data: {
-        count: {
-          increment: 1,
-        },
-      },
-      where: {
-        short_url_id,
-      },
-    });
+    return this.visit.increment({ shortURL: { id: short_url_id } }, "count", 1);
   }
 }
