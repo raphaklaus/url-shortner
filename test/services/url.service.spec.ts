@@ -1,18 +1,7 @@
-import { PrismaClient } from ".prisma/client";
-import { AppDataSource } from "../../src/database/client";
+import { AppDataSource, startDatabase } from "../utils/testDatabase";
 import { ShortURL } from "../../src/database/models/url";
 import URLShortnerService from "../../src/services/urlShortner.service";
 import NotUniqueStrategy from "../utils/mockStrategy";
-
-const repository = new PrismaClient();
-
-afterAll(async () => {
-  await repository.$disconnect();
-});
-
-afterEach(async () => {
-  await repository.$transaction([repository.shortURL.deleteMany()]);
-});
 
 describe("URL Shortner service", () => {
   test("should save URL generated in the database", async () => {
