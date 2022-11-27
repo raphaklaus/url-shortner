@@ -5,6 +5,7 @@
   "main": "dist/server/app.js",
   "scripts": {
     "test": "dotenv -e .env.test -- jest -i --config ./config/jest.json",
+    "typeorm": "typeorm-ts-node-commonjs",
     "bootstrap": "prisma generate",
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:test": "dotenv -e .env.test -- prisma migrate dev",
@@ -32,6 +33,7 @@
     "jest": "^27.3.1",
     "prisma": "^4.6.1",
     "ts-jest": "^27.0.7",
+    "ts-node": "^10.9.1",
     "tsc-watch": "^4.5.0",
     "typescript": "^4.4.4"
   },
@@ -39,6 +41,9 @@
     "@prisma/client": "^4.6.1",
     "body-parser": "^1.20.1",
     "dotenv-cli": "^6.0.0",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "pg": "^8.8.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.10"
   }
 }
