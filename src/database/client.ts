@@ -10,6 +10,7 @@ export const AppDataSource = new DataSource({
   password: "postgres",
   database: "url_shortner",
   entities: models,
-  synchronize: true,
+  synchronize: false,
   logging: false,
+  migrations: ["dist/database/migration/*.js"],
 });
