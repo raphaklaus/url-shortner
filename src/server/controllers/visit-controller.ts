@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import URLService from "../../services/urlShortner.service";
-import VisitService from "../../services/visit.service";
+import URLService from "../../services/url-service";
+import VisitService from "../../services/visit-service";
 import { AppDataSource } from "../../database/client";
 import { ShortURL } from "../../database/models/url";
 import { Visit } from "../../database/models/visit";

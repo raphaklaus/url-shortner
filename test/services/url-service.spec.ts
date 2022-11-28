@@ -1,8 +1,8 @@
-import URLShortner from "../../src/core/urlShortner.core";
+import URLShortner from "../../src/core/url-shortner";
 import { ShortURL } from "../../src/database/models/url";
-import URLService from "../../src/services/urlShortner.service";
-import { NotUniqueStrategy } from "../utils/mockStrategies";
-import { createDatabase } from "../utils/testDatabase";
+import URLService from "../../src/services/url-service";
+import { NotUniqueStrategy } from "../utils/mock-strategies";
+import { createDatabase } from "../utils/test-database";
 
 describe("URL Shortner service", () => {
   test("should save URL generated in the database", async () => {

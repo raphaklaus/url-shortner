@@ -1,4 +1,4 @@
-import { URLShortnerMap, IStrategy } from "./strategy.interface";
+import { URLShortnerMap, IStrategy } from "./strategy-interface";
 
 export default class AlphanumericStrategy implements IStrategy {
   readonly characters = [

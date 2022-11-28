@@ -1,10 +1,10 @@
-import URLShortner from "../../src/core/urlShortner.core";
+import URLShortner from "../../src/core/url-shortner";
 import { ShortURL } from "../../src/database/models/url";
 import { Visit } from "../../src/database/models/visit";
-import URLService from "../../src/services/urlShortner.service";
-import VisitService from "../../src/services/visit.service";
-import { NotUniqueStrategy } from "../utils/mockStrategies";
-import { createDatabase } from "../utils/testDatabase";
+import URLService from "../../src/services/url-service";
+import VisitService from "../../src/services/visit-service";
+import { NotUniqueStrategy } from "../utils/mock-strategies";
+import { createDatabase } from "../utils/test-database";
 
 describe("Visit service", () => {
   test("should count the visit", async () => {

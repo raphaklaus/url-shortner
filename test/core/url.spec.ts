@@ -1,5 +1,5 @@
-import URLShortner from "../../src/core/urlShortner.core";
-import { NotUniqueStrategy } from "../utils/mockStrategies";
+import URLShortner from "../../src/core/url-shortner";
+import { NotUniqueStrategy } from "../utils/mock-strategies";
 
 describe("URL Shortner core strategy", () => {
   test("should return a valid shortned URL", () => {

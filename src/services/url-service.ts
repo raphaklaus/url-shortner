@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-import URLShortner from "../core/urlShortner.core";
+import URLShortner from "../core/url-shortner";
 import { ShortURL } from "../database/models/url";
 import { Visit } from "../database/models/visit";
 import { buildURL, extractCode } from "./utils/url";
