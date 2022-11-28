@@ -17,7 +17,6 @@ export default class URLController {
     const urlService = new URLService(shortURLRepo);
 
     const shortURL = await urlService.create(inputURL, urlShortner);
-
     const url = urlService.getURL(shortURL);
 
     return res.json({ url });

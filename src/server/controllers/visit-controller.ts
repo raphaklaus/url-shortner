@@ -4,6 +4,7 @@ import VisitService from "../../services/visit-service";
 import { AppDataSource } from "../../database/client";
 import { ShortURL } from "../../database/models/url";
 import { Visit } from "../../database/models/visit";
+import { ServerError } from "../errors/server-error";
 
 export default class VisitController {
   static async get(req: Request, res: Response) {
@@ -26,6 +27,6 @@ export default class VisitController {
       return res.json({ visits: count });
     }
 
-    return res.status(404).json({ message: "Short URL not found" });
+    throw new ServerError("Short URL not found", 404);
   }
 }
