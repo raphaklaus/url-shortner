@@ -27,6 +27,25 @@ describe("URL Shortner service", () => {
     });
   });
 
+  test("should return existing code if source already exists", async () => {
+    const AppDataSource = await createDatabase();
+
+    const strategy = new NotUniqueStrategy();
+    const urlShortner = new URLShortner(strategy);
+
+    const shortURLRepo = AppDataSource.getRepository(ShortURL);
+
+    const service = new URLService(shortURLRepo);
+
+    const urlShort = await service.create("https://google.com", urlShortner);
+    const existingShortURL = await service.create(
+      "https://google.com",
+      urlShortner
+    );
+
+    expect(urlShort.code).toEqual(existingShortURL.code);
+  });
+
   test("should throw uniqueness exception on repeated code", async () => {
     const AppDataSource = await createDatabase();
 
