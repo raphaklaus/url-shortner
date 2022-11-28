@@ -1,5 +1,7 @@
 import { URLShortnerMap, IStrategy } from "./strategy-interface";
 
+const SIZE = 7;
+
 export default class AlphanumericStrategy implements IStrategy {
   readonly characters = [
     "A",
@@ -66,7 +68,7 @@ export default class AlphanumericStrategy implements IStrategy {
 
   private generate(): string {
     let result = "";
-    for (let i = 0; i <= 7; i++) {
+    for (let i = 0; i <= SIZE; i++) {
       const isCharacter = Math.random() > 0.5;
 
       if (isCharacter) {
