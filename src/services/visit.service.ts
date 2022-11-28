@@ -11,7 +11,12 @@ export default class VisitService {
     return visit?.count || 0;
   }
 
-  incrementCount(short_url_id: number): Promise<any> {
-    return this.visit.increment({ shortURL: { id: short_url_id } }, "count", 1);
+  async incrementCount(
+    short_url_id: number,
+    currentCount: number
+  ): Promise<number> {
+    await this.visit.increment({ shortURL: { id: short_url_id } }, "count", 1);
+
+    return currentCount++;
   }
 }

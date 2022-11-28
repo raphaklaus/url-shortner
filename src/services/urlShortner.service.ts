@@ -1,23 +1,19 @@
 import { Repository } from "typeorm";
-import { IStrategy } from "../core/strategy.interface";
 import URLShortner from "../core/urlShortner.core";
 import { ShortURL } from "../database/models/url";
 import { Visit } from "../database/models/visit";
 import { buildURL, extractCode } from "./utils/url";
 
-export default class URLShortnerService {
-  private readonly shortner: URLShortner;
+export default class URLService {
   constructor(
-    private readonly strategy: IStrategy,
     private readonly shortURLRepository: Repository<ShortURL>,
     private readonly baseDomain = "tier.app"
   ) {
     this.baseDomain = baseDomain;
     this.shortURLRepository = shortURLRepository;
-    this.shortner = new URLShortner(this.strategy);
   }
 
-  async create(url: string): Promise<ShortURL> {
+  async create(url: string, urlShortner: URLShortner): Promise<ShortURL> {
     const existingShortURL = await this.shortURLRepository.findOneBy({
       source: url,
     });
@@ -29,7 +25,7 @@ export default class URLShortnerService {
     const shortURL = new ShortURL();
     shortURL.source = url;
     shortURL.visit = new Visit();
-    shortURL.code = this.shortner.process(url).to;
+    shortURL.code = urlShortner.process(url).to;
 
     return this.shortURLRepository.save(shortURL);
   }
