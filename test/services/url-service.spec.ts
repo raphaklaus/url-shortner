@@ -33,9 +33,9 @@ describe("URL Shortner service", () => {
     const strategy = new NotUniqueStrategy();
     const urlShortner = new URLShortner(strategy);
 
-    const urlShortRepo = AppDataSource.getRepository(ShortURL);
+    const shortURLRepo = AppDataSource.getRepository(ShortURL);
 
-    const service = new URLService(urlShortRepo);
+    const service = new URLService(shortURLRepo);
 
     await service.create("https://google.com", urlShortner);
     await expect(
