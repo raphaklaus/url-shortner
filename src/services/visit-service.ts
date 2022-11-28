@@ -17,6 +17,6 @@ export default class VisitService {
   ): Promise<number> {
     await this.visit.increment({ shortURL: { id: short_url_id } }, "count", 1);
 
-    return currentCount++;
+    return currentCount + 1;
   }
 }
