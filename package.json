@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest -i --config ./config/jest.json",
     "db:migration:generate": "ts-node -P ./config/tsconfig.json ./node_modules/.bin/typeorm migration:generate $npm_config_migration_path -d src/database/client.ts",
-    "db:migration:run": "tsc -p config/tsconfig.json && ts-node -P ./config/tsconfig.json ./node_modules/.bin/typeorm migration:run -d src/database/client.ts",
+    "db:migration:run": "tsc -p config/tsconfig.json && dotenv -e .env -- ts-node -P ./config/tsconfig.json ./node_modules/.bin/typeorm migration:run -d src/database/client.ts",
     "start": "dotenv -e .env -- tsc-watch -p ./config/tsconfig.json --onSuccess \"node dist/server/app.js\"",
     "lint": "eslint . --ext .ts"
   },
